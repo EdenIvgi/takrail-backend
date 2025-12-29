@@ -83,10 +83,10 @@ async function getById(boardId) {
         const board = await collection.findOne({ _id: ObjectId.createFromHexString(boardId) })
 
         if (!board) throw new Error('Board not found')
-        
+
         // Convert _id to string for frontend
         board._id = board._id.toString()
-        
+
         return board
     } catch (err) {
         logger.error(`while finding board ${boardId}`, err)
@@ -163,7 +163,7 @@ async function addBoardMsg(boardId, msg) {
     try {
         msg.id = makeId()
         msg.createdAt = Date.now()
-        
+
         const boardObjectId = ObjectId.createFromHexString(boardId)
         const collection = await dbService.getCollection(BOARD_COLLECTION)
         await collection.updateOne({ _id: boardObjectId }, { $push: { msgs: msg } })
