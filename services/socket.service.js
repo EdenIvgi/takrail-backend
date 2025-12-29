@@ -30,6 +30,10 @@ export function setupSocketAPI(http) {
             // emits only to sockets in the same room
             gIo.to(socket.myTopic).emit('chat-add-msg', msg)
         })
+        socket.on('board-watch', boardId => {
+            logger.info(`board-watch from socket [id: ${socket.id}], on board ${boardId}`)
+            socket.join('watching:board:' + boardId)
+        })
         socket.on('user-watch', userId => {
             logger.info(`user-watch from socket [id: ${socket.id}], on user ${userId}`)
             socket.join('watching:' + userId)
