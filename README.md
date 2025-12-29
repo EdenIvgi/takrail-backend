@@ -1,6 +1,6 @@
-# Coding Academy Backend Starter
+# TaskRail Backend
 
-A Node.js backend service supporting the Coding Academy E2E starter project. This service provides RESTful APIs, real-time WebSocket functionality, and MongoDB integration.
+A Node.js backend service for TaskRail - a modern project management application. This service provides RESTful APIs, real-time WebSocket functionality, and MongoDB integration.
 
 ## 🚀 Quick Start
 

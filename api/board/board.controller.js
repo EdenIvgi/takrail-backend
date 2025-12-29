@@ -31,14 +31,14 @@ export async function addBoard(req, res) {
     try {
         const board = req.body
         const addedBoard = await boardService.add(board)
-        
+
         // Emit socket event for new board
-        socketService.broadcast({ 
-            type: 'board-added', 
+        socketService.broadcast({
+            type: 'board-added',
             data: addedBoard,
-            userId: req.loggedinUser?._id 
+            userId: req.loggedinUser?._id
         })
-        
+
         res.json(addedBoard)
     } catch (err) {
         logger.error('Failed to add board', err)
@@ -50,26 +50,26 @@ export async function updateBoard(req, res) {
     try {
         const board = req.body
         const updatedBoard = await boardService.update(board)
-        
+
         // Emit socket event for real-time updates
-        socketService.broadcast({ 
-            type: 'board-updated', 
-            data: updatedBoard, 
+        socketService.broadcast({
+            type: 'board-updated',
+            data: updatedBoard,
             room: 'watching:board:' + updatedBoard._id,
-            userId: req.loggedinUser?._id 
+            userId: req.loggedinUser?._id
         })
-        
+
         res.json(updatedBoard)
     } catch (err) {
         logger.error('Failed to update board', err)
-        
+
         // Emit socket event for board removal
-        socketService.broadcast({ 
-            type: 'board-removed', 
+        socketService.broadcast({
+            type: 'board-removed',
             data: boardId,
-            userId: req.loggedinUser?._id 
+            userId: req.loggedinUser?._id
         })
-        
+
         res.status(500).send({ err: 'Failed to update board' })
     }
 }
